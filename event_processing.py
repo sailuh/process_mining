@@ -41,6 +41,7 @@ def generate_tree(csv_path, output_dir):
     event_log = pandas.read_csv(csv_path)
     event_log = pm4py.format_dataframe(event_log, case_id='issue_number', activity_key='event', timestamp_key='created_at')
 
+    # Set up path and name of .png
     output_dir = os.path.expanduser(output_dir)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     file_name = f"process_tree_{timestamp}.png"
@@ -54,6 +55,7 @@ def generate_graph(csv_path, output_dir):
     event_log = pandas.read_csv(csv_path)
     event_log = pm4py.format_dataframe(event_log, case_id='issue_number', activity_key='event', timestamp_key='created_at')
     
+    # Set up path and name of .png
     output_dir = os.path.expanduser(output_dir)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     file_name = f"process_tree_{timestamp}.png"
