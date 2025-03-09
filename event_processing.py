@@ -32,6 +32,20 @@ import pm4py
 import subprocess
 import yaml
 
+
+# Download data from CLI
+def download_data(config_path, cli_path):
+    command = f"Rscript {cli_path} download {config_path} --token_path=~/.ssh/github_token"
+    subprocess.run(command, shell=True, check=True)
+    print("Event data downloaded successfully.")
+
+# Parse data from CLI
+def parse_data(config_path, cli_path):
+    command = f"Rscript exec/ghevents.R parse conf/process_mining.yml"
+    target_directory = os.path.expanduser(cli_path)
+    subprocess.run(command, shell=True, check=True, cwd=target_directory)
+    print("Event data parsed successfully.")
+
 # Return start & end activities
 def start_end_activities(csv_path): 
     event_log = pandas.read_csv(csv_path)
@@ -92,6 +106,12 @@ def main(config_file, action):
         generate_tree(csv_file, output_dir)
     elif action == 'generate_graph':
         generate_graph(csv_file, output_dir)
+    elif action == 'download': 
+        cli_path = conf.get('process_mining', {}).get('ghevents_path')
+        download_data(config_file, cli_path)
+    elif action == 'parse': 
+        cli_path = conf.get('process_mining', {}).get('kaiaulu_wd')
+        parse_data(config_file, cli_path)
     else:
         print(f"Unknown action choose: start_end, generate_tree, generate_graph.")
 
