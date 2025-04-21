@@ -60,9 +60,6 @@ def modify_event_in_csv(csv_path, row_index, new_event, output_csv=None):
         row_index (int): Zero-based index of the row to modify.
         new_event (str): The new event value to assign.
         output_csv (str, optional): Path to save the modified CSV. Otherwise overwrites the original
-
-    Returns:
-        pd.DataFrame: The modified DataFrame.
     """
     df = pd.read_csv(csv_path)
 
